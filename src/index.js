@@ -7,6 +7,7 @@ import { enableES5 } from 'immer';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import * as serviceWorker from 'src/serviceWorker';
 import { SettingsProvider } from 'src/context/SettingsContext';
 import { configureStore } from 'src/store';
 import { restoreSettings } from 'src/utils/settings';
@@ -26,3 +27,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+serviceWorker.unregister();

@@ -25,6 +25,8 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br>
 
+Live Site is http://ec2-3-144-235-116.us-east-2.compute.amazonaws.com:3000
+
 ## User Guide
 
 You can find detailed instructions on using Create React App and many tips in [its documentation](https://facebook.github.io/create-react-app/).
