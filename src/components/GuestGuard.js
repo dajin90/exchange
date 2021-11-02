@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 function GuestGuard({ children }) {
-
   return children;
 }
 

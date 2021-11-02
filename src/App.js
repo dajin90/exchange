@@ -10,12 +10,11 @@ import {
   jssPreset,
   makeStyles,
   StylesProvider,
-  ThemeProvider
 } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import useSettings from 'src/hooks/useSettings';
-import { createTheme } from 'src/theme';
-import Routes from 'src/Routes';
+import ExchangeView from './views/exchange/ExchangeView';
+import { configureStore } from './store';
+import { Provider } from 'react-redux';
 
 const history = createBrowserHistory();
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
@@ -46,21 +45,17 @@ const useStyles = makeStyles(() => createStyles({
 
 function App() {
   useStyles();
-
-  const { settings } = useSettings();
-
+  const store = configureStore();
   return (
-    <ThemeProvider theme={createTheme(settings)}>
-      <StylesProvider jss={jss}>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <SnackbarProvider maxSnack={1}>
-            <Router history={history}>
-              <Routes />
-            </Router>
-          </SnackbarProvider>
-        </MuiPickersUtilsProvider>
-      </StylesProvider>
-    </ThemeProvider>
+    <StylesProvider jss={jss}>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <SnackbarProvider maxSnack={1}>
+          <Provider store={store}>
+            <ExchangeView />
+          </Provider>
+        </SnackbarProvider>
+      </MuiPickersUtilsProvider>
+    </StylesProvider>
   );
 }
 

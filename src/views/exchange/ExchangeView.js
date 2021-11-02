@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Select,
   MenuItem,
@@ -14,12 +14,11 @@ import Page from 'src/components/Page';
 import { useDispatch, useSelector } from 'react-redux';
 import { currencyRates } from 'src/actions/currencyActions';
 import { CURRENCY_TYPE, INIT_BALANCE } from '../../constants';
-import useIsMountedRef from '../../hooks/useIsMountedRef';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     justifyContent: 'center',
-    backgroundColor: '#EFF2F7',
+    backgroundColor: '#eff2f7',
     display: 'flex',
     height: '100%',
     minHeight: '100%',
@@ -32,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   titleText: {
     width: '100%',
-    color: 'red',
+    color: '#0000ff',
     fontSize: 20,
     textAlign: 'center',
     fontWeight: 'bold',
@@ -51,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   bottomPanel: {
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    backgroundColor: '#D0D0D0',
+    backgroundColor: '#d0d0d0',
     padding: 40,
     display: 'flex',
     flexDirection: 'row',
@@ -74,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 10,
   },
   balanceText: {
-    color: '#1E1E1E',
+    color: '#1e1e1e',
     fontSize: 14,
     marginTop: 15
   },
@@ -89,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
   operaterText: {
     fontWeight: 'bold',
     fontSize: 24,
-    color: '#1E1E1E',
+    color: '#1e1e1e',
     marginRight: 15
   },
   valueText: {
@@ -129,7 +128,6 @@ export const fixDecimal = (value) => {
 function ExchangeView() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const isMountedRef = useIsMountedRef();
   const { rates } = useSelector((state) => state.currency);
 
   const [fromType, setFromType] = useState(CURRENCY_TYPE[0]);
@@ -139,13 +137,13 @@ function ExchangeView() {
   const [balance, setBalance] = useState(INIT_BALANCE);
   const [fromExceed, setFromExceed] = useState(false);
 
-  const getRates = useCallback(async (type) => {
+  const getRates = async (type) => {
     await dispatch(currencyRates(type));
-  }, [isMountedRef]);
+  };
 
   useEffect(() => {
     getRates(fromType);
-  }, [getRates]);
+  }, []);
 
   useEffect(() => {
     if (fromValue !== '') {
@@ -155,6 +153,8 @@ function ExchangeView() {
       } else {
         setFromExceed(false);
       }
+    } else {
+      setFromExceed(false);
     }
   }, [rates]);
 
@@ -165,8 +165,22 @@ function ExchangeView() {
       } else {
         setFromExceed(false);
       }
+    } else {
+      setFromExceed(false);
     }
   }, [fromValue]);
+
+  useEffect(() => {
+    if (fromValue !== '') {
+      if (Number(fromValue) > balance[fromType]) {
+        setFromExceed(true);
+      } else {
+        setFromExceed(false);
+      }
+    } else {
+      setFromExceed(false);
+    }
+  }, [toValue]);
 
   const onChangeFromType = (event) => {
     const type = event.target.value;
@@ -256,10 +270,7 @@ function ExchangeView() {
             </div>
           </div>
           <div className={classes.exchangeNotificationWrapper}>
-            {getCurrencyCharater(fromType)}
-            1 =
-            {getCurrencyCharater(toType)}
-            {rates[toType]}
+            {getCurrencyCharater(fromType)}1 = {getCurrencyCharater(toType)}{rates[toType]}
           </div>
           <div className={classes.bottomPanel}>
             <div>
