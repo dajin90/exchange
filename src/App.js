@@ -13,8 +13,6 @@ import {
 } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import ExchangeView from './views/exchange/ExchangeView';
-import { configureStore } from './store';
-import { Provider } from 'react-redux';
 
 const history = createBrowserHistory();
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
@@ -45,14 +43,14 @@ const useStyles = makeStyles(() => createStyles({
 
 function App() {
   useStyles();
-  const store = configureStore();
+
   return (
     <StylesProvider jss={jss}>
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <SnackbarProvider maxSnack={1}>
-          <Provider store={store}>
+          <Router history={history}>
             <ExchangeView />
-          </Provider>
+          </Router>
         </SnackbarProvider>
       </MuiPickersUtilsProvider>
     </StylesProvider>

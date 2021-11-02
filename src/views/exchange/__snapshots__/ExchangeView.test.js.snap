@@ -124,19 +124,30 @@ Array [
       <SnackbarProvider
         maxSnack={1}
       >
-        <Provider
-          store={
+        <Router
+          history={
             Object {
-              "@@observable": [Function],
-              "dispatch": [Function],
-              "getState": [Function],
-              "replaceReducer": [Function],
-              "subscribe": [Function],
+              "action": "POP",
+              "block": [Function],
+              "createHref": [Function],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
+                "hash": "",
+                "pathname": "/",
+                "search": "",
+                "state": undefined,
+              },
+              "push": [Function],
+              "replace": [Function],
             }
           }
         >
           <ExchangeView />
-        </Provider>
+        </Router>
       </SnackbarProvider>
     </MuiPickersUtilsProvider>
   </StylesProvider>,
